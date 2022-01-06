@@ -1,0 +1,22 @@
+{
+    "sourceFile": "package.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1641339948886,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1641357019852,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n   \"version\": \"1.0.0\",\n   \"description\": \"\",\n   \"main\": \"index.js\",\n   \"scripts\": {\n-    \"test\": jest\n+    \"test\": \"jest\"\n   },\n   \"repository\": {\n     \"type\": \"git\",\n     \"url\": \"git+https://github.com/stuart-rickard/jest-another-RPG.git\"\n"
+                }
+            ],
+            "date": 1641339948886,
+            "name": "Commit-0",
+            "content": "{\n  \"name\": \"jest-another-rpg\",\n  \"version\": \"1.0.0\",\n  \"description\": \"\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"test\": jest\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/stuart-rickard/jest-another-RPG.git\"\n  },\n  \"author\": \"\",\n  \"license\": \"ISC\",\n  \"bugs\": {\n    \"url\": \"https://github.com/stuart-rickard/jest-another-RPG/issues\"\n  },\n  \"homepage\": \"https://github.com/stuart-rickard/jest-another-RPG#readme\",\n  \"devDependencies\": {\n    \"jest\": \"^27.4.6\"\n  }\n}\n"
+        }
+    ]
+}

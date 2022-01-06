@@ -1,0 +1,26 @@
+{
+    "sourceFile": "lib/random.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1641340522004,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1641503224869,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,1 +1,8 @@\n-module.exports = function() {};\r\n+module.exports = function(val1, val2) {\r\n+    if (val1 === val2) {\r\n+      return true;\r\n+    } else {\r\n+      return false;\r\n+    }\r\n+  };\r\n+  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1641506746181,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,5 @@\n-module.exports = function(val1, val2) {\r\n-    if (val1 === val2) {\r\n-      return true;\r\n-    } else {\r\n-      return false;\r\n-    }\r\n-  };\r\n-  \n\\ No newline at end of file\n+function randomNumber() {\r\n+    return Math.floor(Math.random() * 9 + 1);\r\n+  }\r\n+  \r\n+  module.exports = randomNumber;\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1641340522004,
+            "name": "Commit-0",
+            "content": "module.exports = function() {};\r\n"
+        }
+    ]
+}

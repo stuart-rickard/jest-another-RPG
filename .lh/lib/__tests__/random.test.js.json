@@ -1,0 +1,18 @@
+{
+    "sourceFile": "lib/__tests__/random.test.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1641340283923,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1641340283923,
+            "name": "Commit-0",
+            "content": "const checkIfEqual = require('../lib/random.js');\r\n\r\ntest('checks if 10 is equal to 10', () => {\r\n  expect(checkIfEqual(10, 10)).toBe(true);\r\n});"
+        }
+    ]
+}

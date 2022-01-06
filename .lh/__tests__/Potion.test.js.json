@@ -1,0 +1,26 @@
+{
+    "sourceFile": "__tests__/Potion.test.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1641504457852,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1641506706232,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,5 +4,13 @@\n     const potion = new Potion('health');\r\n   \r\n     expect(potion.name).toBe('health');\r\n     expect(potion.value).toEqual(expect.any(Number));\r\n+  });\r\n+\r\n+  test('creates a random potion object', () => {\r\n+    const potion = new Potion();\r\n+  \r\n+    expect(potion.name).toEqual(expect.any(String));\r\n+    expect(potion.name.length).toBeGreaterThan(0);\r\n+    expect(potion.value).toEqual(expect.any(Number));\r\n   });\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1641506746180,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,11 +6,11 @@\n     expect(potion.name).toBe('health');\r\n     expect(potion.value).toEqual(expect.any(Number));\r\n   });\r\n \r\n-  test('creates a random potion object', () => {\r\n+test('creates a random potion object', () => {\r\n     const potion = new Potion();\r\n-  \r\n+\r\n     expect(potion.name).toEqual(expect.any(String));\r\n     expect(potion.name.length).toBeGreaterThan(0);\r\n\\ No newline at end of file\n     expect(potion.value).toEqual(expect.any(Number));\r\n-  });\n+});\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1641504457852,
+            "name": "Commit-0",
+            "content": "const Potion = require('../lib/Potion.js');\r\n\r\ntest('creates a health potion object', () => {\r\n    const potion = new Potion('health');\r\n  \r\n    expect(potion.name).toBe('health');\r\n    expect(potion.value).toEqual(expect.any(Number));\r\n  });"
+        }
+    ]
+}
