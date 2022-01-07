@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 13,
             "patches": [
                 {
                     "date": 1641509539363,
@@ -24,6 +24,42 @@
                 {
                     "date": 1641516014561,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,24 +7,23 @@\n     this.strength = Math.floor(Math.random() * 5 + 7);\r\n     this.agility = Math.floor(Math.random() * 5 + 7);\r\n     this.inventory = [new Potion('health'), new Potion()];\r\n   \r\n-    // returns an object with various player properties\r\n-    this.getStats = function() {\r\n-        return {\r\n-        potions: this.inventory.length,\r\n-        health: this.health,\r\n-        strength: this.strength,\r\n-        agility: this.agility\r\n-        };\r\n-    };\r\n+}\r\n \r\n-    // returns the inventory array or false if empty\r\n-    this.getInventory = function() {\r\n-        if (this.inventory.length) {\r\n-        return this.inventory;\r\n-        }\r\n-        return false;\r\n+Player.prototype.getStats = function() {\r\n+    return {\r\n+      potions: this.inventory.length,\r\n+      health: this.health,\r\n+      strength: this.strength,\r\n+      agility: this.agility\r\n     };\r\n-}\r\n+  };\r\n   \r\n+Player.prototype.getInventory = function() {\r\n+    if (this.inventory.length) {\r\n+      return this.inventory;\r\n+    }\r\n+    return false;\r\n+  };\r\n+\r\n module.exports = Player;\r\n"
+                },
+                {
+                    "date": 1641517413312,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,5 +25,9 @@\n     }\r\n     return false;\r\n   };\r\n \r\n+Player.prototype.getHealth = function() {\r\n+    return `${this.name}'s health is now ${this.health}!`;\r\n+  };\r\n+\r\n module.exports = Player;\r\n"
+                },
+                {
+                    "date": 1641517547350,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,5 +29,13 @@\n Player.prototype.getHealth = function() {\r\n     return `${this.name}'s health is now ${this.health}!`;\r\n   };\r\n \r\n+Player.prototype.isAlive = function() {\r\n+    if (this.health === 0) {\r\n+      return false;\r\n+    }\r\n+    return true;\r\n+  };\r\n+\r\n+\r\n module.exports = Player;\r\n"
+                },
+                {
+                    "date": 1641521891867,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,6 +36,13 @@\n     }\r\n     return true;\r\n   };\r\n \r\n+  Player.prototype.reduceHealth = function(health) {\r\n+    this.health -= health;\r\n+  \r\n+    if (this.health < 0) {\r\n+      this.health = 0;\r\n+    }\r\n+  };\r\n \r\n module.exports = Player;\r\n"
+                },
+                {
+                    "date": 1641522049977,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,5 +44,12 @@\n       this.health = 0;\r\n     }\r\n   };\r\n \r\n+  Player.prototype.getAttackValue = function() {\r\n+    const min = this.strength - 5;\r\n+    const max = this.strength + 5;\r\n+  \r\n+    return Math.floor(Math.random() * (max - min) + min);\r\n+  };\r\n+\r\n module.exports = Player;\r\n"
+                },
+                {
+                    "date": 1641522634342,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,5 +51,22 @@\n   \r\n     return Math.floor(Math.random() * (max - min) + min);\r\n   };\r\n \r\n+  Player.prototype.usePotion = function(index) {\r\n+    const potion = this.getInventory().splice(index, 1)[0];\r\n+  \r\n+    switch (potion.name) {\r\n+      case 'agility':\r\n+        this.agility += potion.value;\r\n+        break;\r\n+      case 'health':\r\n+        this.health += potion.value;\r\n+        break;\r\n+      case 'strength':\r\n+        this.strength += potion.value;\r\n+        break;\r\n+    }\r\n+  };\r\n+\r\n+\r\n module.exports = Player;\r\n"
+                },
+                {
+                    "date": 1641522762290,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,8 +51,12 @@\n   \r\n     return Math.floor(Math.random() * (max - min) + min);\r\n   };\r\n \r\n+  Player.prototype1.addNewPotion = function() {\r\n+      this.inventory.push(potion);\r\n+  }\r\n+\r\n   Player.prototype.usePotion = function(index) {\r\n     const potion = this.getInventory().splice(index, 1)[0];\r\n   \r\n     switch (potion.name) {\r\n"
+                },
+                {
+                    "date": 1641522827118,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n   \r\n     return Math.floor(Math.random() * (max - min) + min);\r\n   };\r\n \r\n-  Player.prototype1.addNewPotion = function() {\r\n+  Player.prototype.addNewPotion = function() {\r\n       this.inventory.push(potion);\r\n   }\r\n \r\n   Player.prototype.usePotion = function(index) {\r\n"
+                },
+                {
+                    "date": 1641522858981,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n   \r\n     return Math.floor(Math.random() * (max - min) + min);\r\n   };\r\n \r\n-  Player.prototype.addNewPotion = function() {\r\n+  Player.prototype.addNewPotion = function(potion) {\r\n       this.inventory.push(potion);\r\n   }\r\n \r\n   Player.prototype.usePotion = function(index) {\r\n"
+                },
+                {
+                    "date": 1641522938200,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n   \r\n     return Math.floor(Math.random() * (max - min) + min);\r\n   };\r\n \r\n-  Player.prototype.addNewPotion = function(potion) {\r\n+  Player.prototype.addPotion = function(potion) {\r\n       this.inventory.push(potion);\r\n   }\r\n \r\n   Player.prototype.usePotion = function(index) {\r\n"
                 }
             ],
             "date": 1641509539363,

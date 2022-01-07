@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 16,
             "patches": [
                 {
                     "date": 1641508613528,
@@ -52,6 +52,26 @@
                 {
                     "date": 1641515771375,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,5 +23,14 @@\n     expect(player.getStats()).toHaveProperty('health');\r\n     expect(player.getStats()).toHaveProperty('strength');\r\n     expect(player.getStats()).toHaveProperty('agility');\r\n   });\r\n-  \n\\ No newline at end of file\n+\r\n+  test('gets inventory from player or returns false', () => {\r\n+    const player = new Player('Dave');\r\n+  \r\n+    expect(player.getInventory()).toEqual(expect.any(Array));\r\n+  \r\n+    player.inventory = [];\r\n+  \r\n+    expect(player.getInventory()).toEqual(false);\r\n+  });\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1641517373245,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,5 +32,11 @@\n   \r\n     player.inventory = [];\r\n   \r\n     expect(player.getInventory()).toEqual(false);\r\n-  });\n\\ No newline at end of file\n+  });\r\n+\r\n+  test(\"gets player's health value\", () => {\r\n+    const player = new Player('Dave');\r\n+  \r\n+    expect(player.getHealth()).toEqual(expect.stringContaining(player.health.toString()));\r\n+  });\r\n"
+                },
+                {
+                    "date": 1641517547349,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,4 +39,15 @@\n     const player = new Player('Dave');\r\n   \r\n     expect(player.getHealth()).toEqual(expect.stringContaining(player.health.toString()));\r\n   });\r\n+\r\n+  test('checks if player is alive or not', () => {\r\n+    const player = new Player('Dave');\r\n+  \r\n+    expect(player.isAlive()).toBeTruthy();\r\n+  \r\n+    player.health = 0;\r\n+  \r\n+    expect(player.isAlive()).toBeFalsy();\r\n+  });\r\n+  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1641521891869,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,5 +49,18 @@\n     player.health = 0;\r\n   \r\n     expect(player.isAlive()).toBeFalsy();\r\n   });\r\n+\r\n+  test(\"subtracts from player's health\", () => {\r\n+    const player = new Player('Dave');\r\n+    const oldHealth = player.health;\r\n+  \r\n+    player.reduceHealth(5);\r\n+  \r\n+    expect(player.health).toBe(oldHealth - 5);\r\n+  \r\n+    player.reduceHealth(99999);\r\n+  \r\n+    expect(player.health).toBe(0);\r\n+  });\r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1641522049966,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,5 +62,21 @@\n     player.reduceHealth(99999);\r\n   \r\n     expect(player.health).toBe(0);\r\n   });\r\n-  \n\\ No newline at end of file\n+\r\n+  test(\"gets player's attack value\", () => {\r\n+    const player = new Player('Dave');\r\n+    player.strength = 10;\r\n+  \r\n+    expect(player.getAttackValue()).toBeGreaterThanOrEqual(5);\r\n+    expect(player.getAttackValue()).toBeLessThanOrEqual(15);\r\n+  });\r\n+\r\n+  test('adds a potion to the inventory', () => {\r\n+    const player = new Player('Dave');\r\n+    const oldCount = player.inventory.length;\r\n+  \r\n+    player.addPotion(new Potion());\r\n+  \r\n+    expect(player.inventory.length).toBeGreaterThan(oldCount);\r\n+  });\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1641522634342,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,5 +78,16 @@\n   \r\n     player.addPotion(new Potion());\r\n   \r\n     expect(player.inventory.length).toBeGreaterThan(oldCount);\r\n-  });\n\\ No newline at end of file\n+  });\r\n+\r\n+  test('uses a potion from inventory', () => {\r\n+    const player = new Player('Dave');\r\n+    player.inventory = [new Potion(), new Potion(), new Potion()];\r\n+    const oldCount = player.inventory.length;\r\n+  \r\n+    player.usePotion(1);\r\n+  \r\n+    expect(player.inventory.length).toBeLessThan(oldCount);\r\n+  });\r\n+  \n\\ No newline at end of file\n"
                 }
             ],
             "date": 1641508613528,
