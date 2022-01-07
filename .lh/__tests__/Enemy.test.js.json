@@ -1,0 +1,30 @@
+{
+    "sourceFile": "__tests__/Enemy.test.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1641523265742,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1641523426679,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,42 @@\n   expect(enemy.health).toEqual(expect.any(Number));\r\n   expect(enemy.strength).toEqual(expect.any(Number));\r\n   expect(enemy.agility).toEqual(expect.any(Number));\r\n   expect(enemy.potion).toEqual(expect.any(Object));\r\n-});\n\\ No newline at end of file\n+});\r\n+\r\n+test(\"gets enemy's health value\", () => {\r\n+    const enemy = new Enemy('goblin', 'sword');\r\n+  \r\n+    expect(enemy.getHealth()).toEqual(expect.stringContaining(enemy.health.toString()));\r\n+  });\r\n+  \r\n+  test('checks if enemy is alive or not', () => {\r\n+    const enemy = new Enemy('goblin', 'sword');\r\n+  \r\n+    expect(enemy.isAlive()).toBeTruthy();\r\n+  \r\n+    enemy.health = 0;\r\n+  \r\n+    expect(enemy.isAlive()).toBeFalsy();\r\n+  });\r\n+  \r\n+  test(\"gets enemy's attack value\", () => {\r\n+    const enemy = new Enemy('goblin', 'sword');\r\n+    enemy.strength = 10;\r\n+  \r\n+    expect(enemy.getAttackValue()).toBeGreaterThanOrEqual(5);\r\n+    expect(enemy.getAttackValue()).toBeLessThanOrEqual(15);\r\n+  });\r\n+  \r\n+  test(\"subtracts from enemy's health\", () => {\r\n+    const enemy = new Enemy('goblin', 'sword');\r\n+    const oldHealth = enemy.health;\r\n+  \r\n+    enemy.reduceHealth(5);\r\n+  \r\n+    expect(enemy.health).toBe(oldHealth - 5);\r\n+  \r\n+    enemy.reduceHealth(99999);\r\n+  \r\n+    expect(enemy.health).toBe(0);\r\n+  });\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1641523836575,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,5 +48,6 @@\n   \r\n     enemy.reduceHealth(99999);\r\n   \r\n     expect(enemy.health).toBe(0);\r\n-  });\n\\ No newline at end of file\n+  });\r\n+  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1641524043880,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,5 +49,12 @@\n     enemy.reduceHealth(99999);\r\n   \r\n     expect(enemy.health).toBe(0);\r\n   });\r\n+\r\n+  test('gets a description of the enemy', () => {\r\n+    const enemy = new Enemy('goblin', 'sword');\r\n+  \r\n+    expect(enemy.getDescription()).toEqual(expect.stringContaining('goblin'));\r\n+    expect(enemy.getDescription()).toEqual(expect.stringContaining('sword'));\r\n+  });\r\n   \n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1641523265742,
+            "name": "Commit-0",
+            "content": "const Enemy = require('../lib/Enemy.js');\r\nconst Potion = require('../lib/Potion.js');\r\n\r\njest.mock('../lib/Potion.js');\r\n\r\ntest('creates an enemy object', () => {\r\n  const enemy = new Enemy('goblin', 'sword');\r\n\r\n  expect(enemy.name).toBe('goblin');\r\n  expect(enemy.weapon).toBe('sword');\r\n  expect(enemy.health).toEqual(expect.any(Number));\r\n  expect(enemy.strength).toEqual(expect.any(Number));\r\n  expect(enemy.agility).toEqual(expect.any(Number));\r\n  expect(enemy.potion).toEqual(expect.any(Object));\r\n});"
+        }
+    ]
+}

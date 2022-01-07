@@ -1,0 +1,26 @@
+{
+    "sourceFile": "lib/Enemy.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1641523345726,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1641523473706,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,5 +9,31 @@\n   this.strength = Math.floor(Math.random() * 5 + 5);\r\n   this.agility = Math.floor(Math.random() * 5 + 5);\r\n }\r\n \r\n+Enemy.prototype.getHealth = function() {\r\n+    return `The ${this.name}'s health is now ${this.health}!`;\r\n+  };\r\n+  \r\n+  Enemy.prototype.isAlive = function() {\r\n+    if (this.health === 0) {\r\n+      return false;\r\n+    }\r\n+    return true;\r\n+  };\r\n+  \r\n+  Enemy.prototype.getAttackValue = function() {\r\n+    const min = this.strength - 5;\r\n+    const max = this.strength + 5;\r\n+  \r\n+    return Math.floor(Math.random() * (max - min) + min);\r\n+  };\r\n+  \r\n+  Enemy.prototype.reduceHealth = function(health) {\r\n+    this.health -= health;\r\n+  \r\n+    if (this.health < 0) {\r\n+      this.health = 0;\r\n+    }\r\n+  };\r\n+\r\n module.exports = Enemy;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1641524043879,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,5 +35,9 @@\n       this.health = 0;\r\n     }\r\n   };\r\n \r\n+  Enemy.prototype.getDescription = function() {\r\n+    return `A ${this.name} holding a ${this.weapon} has appeared!`;\r\n+  };\r\n+\r\n module.exports = Enemy;\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1641523345726,
+            "name": "Commit-0",
+            "content": "const Potion = require('./Potion');\r\n\r\nfunction Enemy(name, weapon) {\r\n  this.name = name;\r\n  this.weapon = weapon;\r\n  this.potion = new Potion();\r\n\r\n  this.health = Math.floor(Math.random() * 10 + 85);\r\n  this.strength = Math.floor(Math.random() * 5 + 5);\r\n  this.agility = Math.floor(Math.random() * 5 + 5);\r\n}\r\n\r\nmodule.exports = Enemy;"
+        }
+    ]
+}
