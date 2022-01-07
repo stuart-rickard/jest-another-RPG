@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 13,
             "patches": [
                 {
                     "date": 1641574644115,
@@ -20,6 +20,46 @@
                 {
                     "date": 1641577766726,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,10 @@\n         .then(({ name }) => {\r\n             this.player = new Player(name);\r\n \r\n             // test the object creation\r\n-            console.log(this.currentEnemy, this.player);\r\n+            // console.log(this.currentEnemy, this.player);\r\n+            this.startNewBattle();\r\n         });\r\n };\r\n \r\n \r\n"
+                },
+                {
+                    "date": 1641581766233,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,7 +32,15 @@\n             this.startNewBattle();\r\n         });\r\n };\r\n \r\n+Game.prototype.startNewBattle = function() {\r\n+    if (this.player.agility > this.currentEnemy.agility) {\r\n+      this.isPlayerTurn = true;\r\n+    } else {\r\n+      this.isPlayerTurn = false;\r\n+    }\r\n+    console.log('Your stats are as follows:');\r\n+    console.table(this.player.getStats());\r\n+  };\r\n \r\n-\r\n module.exports = Game;\r\n"
+                },
+                {
+                    "date": 1641581832119,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,7 +40,9 @@\n       this.isPlayerTurn = false;\r\n     }\r\n     console.log('Your stats are as follows:');\r\n     console.table(this.player.getStats());\r\n+    console.log(this.currentEnemy.getDescription());\r\n+\r\n   };\r\n \r\n module.exports = Game;\r\n"
+                },
+                {
+                    "date": 1641581900680,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,8 +41,8 @@\n     }\r\n     console.log('Your stats are as follows:');\r\n     console.table(this.player.getStats());\r\n     console.log(this.currentEnemy.getDescription());\r\n-\r\n+    this.battle();\r\n   };\r\n \r\n module.exports = Game;\r\n"
+                },
+                {
+                    "date": 1641582094061,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,5 +44,18 @@\n     console.log(this.currentEnemy.getDescription());\r\n     this.battle();\r\n   };\r\n \r\n+Game.prototype.battle = function() {\r\n+    if (this.isPlayerTurn) {\r\n+      // player prompts will go here\r\n+    } else {\r\n+      const damage = this.currentEnemy.getAttackValue();\r\n+      this.player.reduceHealth(damage);\r\n+  \r\n+      console.log(`You were attacked by the ${this.currentEnemy.name}`);\r\n+      console.log(this.player.getHealth());\r\n+    }\r\n+  };\r\n+\r\n+\r\n module.exports = Game;\r\n"
+                },
+                {
+                    "date": 1641582175871,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,10 +46,27 @@\n   };\r\n \r\n Game.prototype.battle = function() {\r\n     if (this.isPlayerTurn) {\r\n-      // player prompts will go here\r\n-    } else {\r\n+        inquirer\r\n+          .prompt({\r\n+            type: 'list',\r\n+            message: 'What would you like to do?',\r\n+            name: 'action',\r\n+            choices: ['Attack', 'Use potion']\r\n+          })\r\n+          .then(({ action }) => {\r\n+            if (action === 'Use potion') {\r\n+              // follow-up prompt will go here\r\n+            } else {\r\n+              const damage = this.player.getAttackValue();\r\n+              this.currentEnemy.reduceHealth(damage);\r\n+      \r\n+              console.log(`You attacked the ${this.currentEnemy.name}`);\r\n+              console.log(this.currentEnemy.getHealth());\r\n+            }\r\n+          });\r\n+      } else {\r\n       const damage = this.currentEnemy.getAttackValue();\r\n       this.player.reduceHealth(damage);\r\n   \r\n       console.log(`You were attacked by the ${this.currentEnemy.name}`);\r\n"
+                },
+                {
+                    "date": 1641582400180,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,9 +55,20 @@\n             choices: ['Attack', 'Use potion']\r\n           })\r\n           .then(({ action }) => {\r\n             if (action === 'Use potion') {\r\n-              // follow-up prompt will go here\r\n+                if (!this.player.getInventory()) {\r\n+                    console.log(\"You don't have any potions!\");\r\n+                    return;\r\n+                  }\r\n+                \r\n+                  inquirer\r\n+                    .prompt({\r\n+                      type: 'list',\r\n+                      message: 'Which potion would you like to use?',\r\n+                      name: 'action',\r\n+                      choices: [ /* potions will go here */ ]\r\n+                    });\r\n             } else {\r\n               const damage = this.player.getAttackValue();\r\n               this.currentEnemy.reduceHealth(damage);\r\n       \r\n"
+                },
+                {
+                    "date": 1641582879343,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,10 @@\n           .prompt({\r\n             type: 'list',\r\n             message: 'What would you like to do?',\r\n             name: 'action',\r\n-            choices: ['Attack', 'Use potion']\r\n+            choices: choices: this.player.getInventory().map((item, index) => `${index + 1}: ${item.name}`)\r\n+\r\n           })\r\n           .then(({ action }) => {\r\n             if (action === 'Use potion') {\r\n                 if (!this.player.getInventory()) {\r\n@@ -65,9 +66,15 @@\n                     .prompt({\r\n                       type: 'list',\r\n                       message: 'Which potion would you like to use?',\r\n                       name: 'action',\r\n-                      choices: [ /* potions will go here */ ]\r\n+                      choices: this.player.getInventory().map((item, index) => `${index + 1}: ${item.name}`)\r\n+                    })\r\n+                    .then(({ action }) => {\r\n+                        const potionDetails = action.split(': ');\r\n+\r\n+                        this.player.usePotion(potionDetails[0] - 1);\r\n+                        console.log(`You used a ${potionDetails[1]} potion.`);\r\n                     });\r\n             } else {\r\n               const damage = this.player.getAttackValue();\r\n               this.currentEnemy.reduceHealth(damage);\r\n"
+                },
+                {
+                    "date": 1641582997581,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,9 @@\n                     .prompt({\r\n                       type: 'list',\r\n                       message: 'Which potion would you like to use?',\r\n                       name: 'action',\r\n-                      choices: this.player.getInventory().map((item, index) => `${index + 1}: ${item.name}`)\r\n+                      choices: ['a','b']//this.player.getInventory().map((item, index) => `${index + 1}: ${item.name}`)\r\n                     })\r\n                     .then(({ action }) => {\r\n                         const potionDetails = action.split(': ');\r\n \r\n"
+                },
+                {
+                    "date": 1641583036851,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n           .prompt({\r\n             type: 'list',\r\n             message: 'What would you like to do?',\r\n             name: 'action',\r\n-            choices: choices: this.player.getInventory().map((item, index) => `${index + 1}: ${item.name}`)\r\n+            choices: this.player.getInventory().map((item, index) => `${index + 1}: ${item.name}`)\r\n \r\n           })\r\n           .then(({ action }) => {\r\n             if (action === 'Use potion') {\r\n@@ -66,9 +66,9 @@\n                     .prompt({\r\n                       type: 'list',\r\n                       message: 'Which potion would you like to use?',\r\n                       name: 'action',\r\n-                      choices: ['a','b']//this.player.getInventory().map((item, index) => `${index + 1}: ${item.name}`)\r\n+                      choices: this.player.getInventory().map((item, index) => `${index + 1}: ${item.name}`)\r\n                     })\r\n                     .then(({ action }) => {\r\n                         const potionDetails = action.split(': ');\r\n \r\n"
+                },
+                {
+                    "date": 1641583125767,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n           .prompt({\r\n             type: 'list',\r\n             message: 'What would you like to do?',\r\n             name: 'action',\r\n-            choices: this.player.getInventory().map((item, index) => `${index + 1}: ${item.name}`)\r\n+            choices: ['Attack', 'Use potion']\r\n \r\n           })\r\n           .then(({ action }) => {\r\n             if (action === 'Use potion') {\r\n"
                 }
             ],
             "date": 1641574644115,
