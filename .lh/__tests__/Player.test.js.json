@@ -1,0 +1,62 @@
+{
+    "sourceFile": "__tests__/Player.test.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 11,
+            "patches": [
+                {
+                    "date": 1641508613528,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1641508864232,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,1 +1,11 @@\n+const { TestWatcher } = require('jest');\r\n const Player = require ('../lib/Player');\r\n+\r\n+TestWatcher('creates a player object', () => {\r\n+    const player = new Player('Dave');\r\n+\r\n+    expect(player.name).toBe(\"Dave\");\r\n+    expect(player.health).toEqual(expect.any(Number));\r\n+    expect(player.strength).toEqual(expect.any(Number));\r\n+    expect(player.agility).toEqual(expect.any(Number));\r\n+});\r\n"
+                },
+                {
+                    "date": 1641510137866,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const { TestWatcher } = require('jest');\r\n-const Player = require ('../lib/Player');\r\n+const Player = require ('../lib/Player.js');\r\n \r\n TestWatcher('creates a player object', () => {\r\n     const player = new Player('Dave');\r\n \r\n"
+                },
+                {
+                    "date": 1641510261330,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n-const { TestWatcher } = require('jest');\r\n const Player = require ('../lib/Player.js');\r\n \r\n-TestWatcher('creates a player object', () => {\r\n+test('creates a health potion object', () => {\r\n+\r\n     const player = new Player('Dave');\r\n \r\n     expect(player.name).toBe(\"Dave\");\r\n     expect(player.health).toEqual(expect.any(Number));\r\n"
+                },
+                {
+                    "date": 1641510364473,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n+const { TestWatcher } = require('jest');\r\n const Player = require ('../lib/Player.js');\r\n \r\n-test('creates a health potion object', () => {\r\n-\r\n+TestWatcher('creates a player object', () => {\r\n     const player = new Player('Dave');\r\n \r\n     expect(player.name).toBe(\"Dave\");\r\n     expect(player.health).toEqual(expect.any(Number));\r\n"
+                },
+                {
+                    "date": 1641510494855,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,5 @@\n-const { TestWatcher } = require('jest');\r\n-const Player = require ('../lib/Player.js');\r\n-\r\n-TestWatcher('creates a player object', () => {\r\n+test('creates a player object', () => {\r\n     const player = new Player('Dave');\r\n \r\n     expect(player.name).toBe(\"Dave\");\r\n     expect(player.health).toEqual(expect.any(Number));\r\n"
+                },
+                {
+                    "date": 1641510553847,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,6 @@\n+const Player = require('../lib/Player.js');\r\n+\r\n test('creates a player object', () => {\r\n     const player = new Player('Dave');\r\n \r\n     expect(player.name).toBe(\"Dave\");\r\n"
+                },
+                {
+                    "date": 1641511112351,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,10 @@\n+const Potion = require('../lib/Potion');\r\n+\r\n+jest.mock('../lib/Potion');\r\n+\r\n+console.log(new Potion());\r\n+\r\n const Player = require('../lib/Player.js');\r\n \r\n test('creates a player object', () => {\r\n     const player = new Player('Dave');\r\n"
+                },
+                {
+                    "date": 1641511185599,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,8 @@\n const Potion = require('../lib/Potion');\r\n \r\n jest.mock('../lib/Potion');\r\n \r\n-console.log(new Potion());\r\n-\r\n const Player = require('../lib/Player.js');\r\n \r\n test('creates a player object', () => {\r\n     const player = new Player('Dave');\r\n"
+                },
+                {
+                    "date": 1641515082430,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,5 +10,8 @@\n     expect(player.name).toBe(\"Dave\");\r\n     expect(player.health).toEqual(expect.any(Number));\r\n     expect(player.strength).toEqual(expect.any(Number));\r\n     expect(player.agility).toEqual(expect.any(Number));\r\n+    expect(player.inventory).toEqual(\r\n+        expect.arrayContaining([expect.any(Object)])\r\n+      );\r\n });\r\n"
+                },
+                {
+                    "date": 1641515445413,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,4 +14,14 @@\n     expect(player.inventory).toEqual(\r\n         expect.arrayContaining([expect.any(Object)])\r\n       );\r\n });\r\n+\r\n+test(\"gets player's stats as an object\", () => {\r\n+    const player = new Player('Dave');\r\n+  \r\n+    expect(player.getStats()).toHaveProperty('potions');\r\n+    expect(player.getStats()).toHaveProperty('health');\r\n+    expect(player.getStats()).toHaveProperty('strength');\r\n+    expect(player.getStats()).toHaveProperty('agility');\r\n+  });\r\n+  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1641515771375,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,5 +23,14 @@\n     expect(player.getStats()).toHaveProperty('health');\r\n     expect(player.getStats()).toHaveProperty('strength');\r\n     expect(player.getStats()).toHaveProperty('agility');\r\n   });\r\n-  \n\\ No newline at end of file\n+\r\n+  test('gets inventory from player or returns false', () => {\r\n+    const player = new Player('Dave');\r\n+  \r\n+    expect(player.getInventory()).toEqual(expect.any(Array));\r\n+  \r\n+    player.inventory = [];\r\n+  \r\n+    expect(player.getInventory()).toEqual(false);\r\n+  });\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1641508613528,
+            "name": "Commit-0",
+            "content": "const Player = require ('../lib/Player');\r\n"
+        }
+    ]
+}
